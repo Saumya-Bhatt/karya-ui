@@ -11,8 +11,8 @@ function Navbar({ user, onSignOut }) {
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "16px",
-                backgroundColor: "primary.700", // Different color for Navbar
-                color: "white", // Ensure text color is white
+                backgroundColor: "neutral.900",
+                color: "white",
                 boxShadow: "sm",
             }}
         >

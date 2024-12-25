@@ -1,13 +1,13 @@
 import React from "react";
 import { Typography } from "@mui/joy";
 
-function Jobs() {
+function ListJobs() {
     return (
         <div>
-            <Typography level="h3">List all Jobs</Typography>
+            <Typography level="h3">List all ListJobs</Typography>
             <p>This is the page to list all jobs.</p>
         </div>
     );
 }
 
-export default Jobs;
+export default ListJobs;
