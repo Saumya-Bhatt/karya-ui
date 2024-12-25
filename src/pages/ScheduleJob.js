@@ -1,11 +1,38 @@
 import React, { useState } from "react";
-import { Divider, Grid, Card, Typography } from "@mui/joy";
+import { Divider, Grid, Card, Typography, Select, Option } from "@mui/joy";
+import RestCallAction from "../components/actions/RestCallAction";
+import SlackMessageAction from "../components/actions/SlackMessageAction";
+import PushKafkaAction from "../components/actions/PushKafkaAction";
+import SendEmailAction from "../components/actions/SendEmailAction";
+import ChainPlanAction from "../components/actions/ChainPlanAction";
 
 function ScheduleJob() {
     const [selectedCard, setSelectedCard] = useState(1);
+    const [selectedAction, setSelectedAction] = useState("RestCall"); // Default selected action set to RestCall
 
     const handleCardClick = (cardNumber) => {
         setSelectedCard(cardNumber);
+    };
+
+    const handleActionChange = (event, newValue) => {
+        setSelectedAction(newValue);
+    };
+
+    const renderActionComponent = () => {
+        switch (selectedAction) {
+            case "RestCall":
+                return <RestCallAction />;
+            case "SlackMessage":
+                return <SlackMessageAction />;
+            case "PushKafka":
+                return <PushKafkaAction />;
+            case "SendEmail":
+                return <SendEmailAction />;
+            case "ChainPlan":
+                return <ChainPlanAction />;
+            default:
+                return null;
+        }
     };
 
     return (
@@ -56,11 +83,33 @@ function ScheduleJob() {
 
             <Divider />
 
+            <br />
+
             {selectedCard === 1 && (
-                <Typography level="body1" sx={{ marginTop: "16px" }}>
-                    Define what action to take once a task is executed.
-                </Typography>
+                <>
+                    <Grid container alignItems="center">
+                        <Typography variant="body1" sx={{ marginRight: "10px" }}>
+                            Select an action to configure:
+                        </Typography>
+                        <Select
+                            defaultValue={selectedAction}
+                            value={selectedAction}
+                            onChange={handleActionChange}
+                            sx={{ width: "fit-content" }}
+                        >
+                            <Option value="RestCall">Make REST call</Option>
+                            <Option value="SlackMessage">Send Slack Message</Option>
+                            <Option value="PushKafka">Push message to Kafka</Option>
+                            <Option value="SendEmail">Send Email from Karya</Option>
+                            <Option value="ChainPlan">Chain another Plan</Option>
+                        </Select>
+                    </Grid>
+
+                    <br />
+                    {renderActionComponent()}
+                </>
             )}
+
             {selectedCard === 2 && (
                 <Typography level="body1" sx={{ marginTop: "16px" }}>
                     Create and define the plan details you want to schedule.
