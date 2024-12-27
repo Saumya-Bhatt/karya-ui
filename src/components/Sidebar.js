@@ -15,7 +15,7 @@ function Sidebar() {
     return (
         <Box
             sx={{
-                width: "250px",
+                width: "21vw",
                 backgroundColor: "neutral.softBg",
                 padding: "16px",
                 boxShadow: "sm",

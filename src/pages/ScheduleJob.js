@@ -1,47 +1,26 @@
 import React, { useState } from "react";
-import { Divider, Grid, Card, Typography, Select, Option } from "@mui/joy";
-import RestCallAction from "../components/actions/RestCallAction";
-import SlackMessageAction from "../components/actions/SlackMessageAction";
-import PushKafkaAction from "../components/actions/PushKafkaAction";
-import SendEmailAction from "../components/actions/SendEmailAction";
-import ChainPlanAction from "../components/actions/ChainPlanAction";
+import { Divider, Grid, Card, Typography, Box } from "@mui/joy";
+import DefineAction from "../components/flow/DefineAction";
+import CreatePlan from "../components/flow/CreatePlan";
+import SubmitPlan from "../components/flow/SubmitPlan";
 
 function ScheduleJob() {
     const [selectedCard, setSelectedCard] = useState(1);
-    const [selectedAction, setSelectedAction] = useState("RestCall"); // Default selected action set to RestCall
+
+    const [action, setAction] = useState(null)
+    const [draftPlan, setDraftPlan] = useState()
 
     const handleCardClick = (cardNumber) => {
         setSelectedCard(cardNumber);
     };
 
-    const handleActionChange = (event, newValue) => {
-        setSelectedAction(newValue);
-    };
-
-    const renderActionComponent = () => {
-        switch (selectedAction) {
-            case "RestCall":
-                return <RestCallAction />;
-            case "SlackMessage":
-                return <SlackMessageAction />;
-            case "PushKafka":
-                return <PushKafkaAction />;
-            case "SendEmail":
-                return <SendEmailAction />;
-            case "ChainPlan":
-                return <ChainPlanAction />;
-            default:
-                return null;
-        }
-    };
-
     return (
-        <div>
+        <Box>
             <Typography level="h3" sx={{ marginBottom: "16px" }}>
                 Karya Web Client
             </Typography>
             <Typography level="body1" sx={{ marginBottom: "16px" }}>
-                A browser based client to schedule jobs on Karya.
+                A browser-based client to schedule jobs on Karya.
             </Typography>
 
             <br />
@@ -85,42 +64,10 @@ function ScheduleJob() {
 
             <br />
 
-            {selectedCard === 1 && (
-                <>
-                    <Grid container alignItems="center">
-                        <Typography variant="body1" sx={{ marginRight: "10px" }}>
-                            Select an action to configure:
-                        </Typography>
-                        <Select
-                            defaultValue={selectedAction}
-                            value={selectedAction}
-                            onChange={handleActionChange}
-                            sx={{ width: "fit-content" }}
-                        >
-                            <Option value="RestCall">Make REST call</Option>
-                            <Option value="SlackMessage">Send Slack Message</Option>
-                            <Option value="PushKafka">Push message to Kafka</Option>
-                            <Option value="SendEmail">Send Email from Karya</Option>
-                            <Option value="ChainPlan">Chain another Plan</Option>
-                        </Select>
-                    </Grid>
-
-                    <br />
-                    {renderActionComponent()}
-                </>
-            )}
-
-            {selectedCard === 2 && (
-                <Typography level="body1" sx={{ marginTop: "16px" }}>
-                    Create and define the plan details you want to schedule.
-                </Typography>
-            )}
-            {selectedCard === 3 && (
-                <Typography level="body1" sx={{ marginTop: "16px" }}>
-                    Submit the plan to Karya for task scheduling.
-                </Typography>
-            )}
-        </div>
+            {selectedCard === 1 && <DefineAction setAction={setAction} existingAction={action} />}
+            {selectedCard === 2 && <CreatePlan setDraftPlan={setDraftPlan} existingDraftPlan={draftPlan} />}
+            {selectedCard === 3 && <SubmitPlan action={action} draftPlan={draftPlan} />}
+        </Box>
     );
 }
 
