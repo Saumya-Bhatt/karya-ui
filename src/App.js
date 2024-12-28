@@ -6,9 +6,12 @@ import ListJobs from "./pages/ListJobs";
 import JobSummary from "./pages/JobSummary";
 import SignIn from "./pages/SignIn";
 import ScheduleJob from "./pages/ScheduleJob";
+import karyaClient from "./utils/GetKaryaClient"
+
 
 function App() {
   const [user, setUser] = useState(null);
+  const client = karyaClient
 
   // Load user from localStorage on app load
   useEffect(() => {
@@ -33,13 +36,13 @@ function App() {
 
   return (
     <Router>
-      {user && <Navbar user={user} onSignOut={handleSignOut} />}
+      {user && <Navbar user={user} client={client} onSignOut={handleSignOut} />}
       <div style={{ display: "flex", height: "100vh" }}>
         {user ? <Sidebar /> : <></>}
         <div style={{ flexGrow: 1, padding: "24px", overflowY: "auto" }}> {/* Scrollable content area */}
           <Routes>
-            <Route path="/" element={user ? <Navigate to="/schedule" /> : <SignIn setUser={setUser} />} />
-            <Route path="/schedule" element={user ? <ScheduleJob user={user} /> : <Navigate to="/" />} />
+            <Route path="/" element={user ? <Navigate to="/schedule" /> : <SignIn client={client} setUser={setUser} />} />
+            <Route path="/schedule" element={user ? <ScheduleJob client={client} user={user} /> : <Navigate to="/" />} />
             <Route path="/jobs" element={user ? <ListJobs /> : <Navigate to="/" />} />
             <Route path="/job-summary" element={user ? <JobSummary /> : <Navigate to="/" />} />
           </Routes>

@@ -4,7 +4,7 @@ import { SubmitPlanRequest } from 'karya-client/client/requests.js';
 import PopupStack from "../PopupStack";
 
 
-function SubmitPlan({ user, action, draftPlan, setAction, setDraftPlan }) {
+function SubmitPlan({ client, user, action, draftPlan, setAction, setDraftPlan }) {
 
     const [popups, setPopups] = useState([]);
     const addPopup = (popupMessage, type) => {
@@ -14,7 +14,11 @@ function SubmitPlan({ user, action, draftPlan, setAction, setDraftPlan }) {
         setPopups((prevPopups) => prevPopups.filter((_, i) => i !== index));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        if (!user || user == null) {
+            addPopup("Only a user registered with Karya can submit plan", "warning")
+            return;
+        }
         if (!action || action == null) {
             addPopup("Define an action before submitting a plan", "warning")
             return;
@@ -35,6 +39,8 @@ function SubmitPlan({ user, action, draftPlan, setAction, setDraftPlan }) {
                 draftPlan.max_failure_retry
             )
             console.log("Submitting Plan Request: ", request)
+            const plan = await client.submitPlan(request)
+            console.log("Plan created successfully:", plan)
             addPopup("Plan submitted to Karya successfully!", "success")
         } catch (error) {
             console.log("Error creating SubmitPlanRequest", error)

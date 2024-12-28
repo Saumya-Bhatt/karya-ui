@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Typography, Button } from "@mui/joy";
+import { Box, Typography, Button, Chip, Stack } from "@mui/joy";
+import { DummyKaryaClient } from "../utils/DummyClient";
 
-function Navbar({ user, onSignOut }) {
+function Navbar({ user, client, onSignOut }) {
     const { name, version } = require("../../package.json"); // Importing package.json content
 
     return (
@@ -17,7 +18,11 @@ function Navbar({ user, onSignOut }) {
             }}
         >
             <Box>
-                <Typography level="h4" sx={{ color: "white" }}>{name} v{version}</Typography>
+                <Stack direction="row" spacing={1}>
+                    <Typography level="h4" sx={{ color: "white" }}>{name} v{version}</Typography>
+                    {client instanceof DummyKaryaClient ?
+                        <Chip size="sm" color="primary" variant="solid">Dummy</Chip> : <Chip variant="solid" size="sm" color="primary">Live</Chip>}
+                </Stack>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
                 <Typography level="body1">
