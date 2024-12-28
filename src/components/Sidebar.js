@@ -32,17 +32,17 @@ function Sidebar() {
                 </ListItem>
                 <ListItem>
                     <NavLink to="/schedule" style={navLinkStyles}>
-                        <ListItemButton>Schedule Job</ListItemButton>
+                        <ListItemButton>Schedule Tasks</ListItemButton>
                     </NavLink>
                 </ListItem>
                 <ListItem>
                     <NavLink to="/jobs" style={navLinkStyles}>
-                        <ListItemButton>List all Jobs</ListItemButton>
+                        <ListItemButton>List all Plans</ListItemButton>
                     </NavLink>
                 </ListItem>
                 <ListItem>
                     <NavLink to="/job-summary" style={navLinkStyles}>
-                        <ListItemButton>Get Job Summary</ListItemButton>
+                        <ListItemButton>Get Plan Summary</ListItemButton>
                     </NavLink>
                 </ListItem>
 

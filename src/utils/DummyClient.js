@@ -81,13 +81,22 @@ export class DummyKaryaClient {
      * @returns {Promise<Plan>} - The updated plan.
      */
     async updatePlan(request) {
+        console.log(request)
         const plan = this.plans.get(request.planId);
         if (!plan) throw new Error(`Plan with ID '${request.planId}' not found`);
 
-        Object.assign(plan, request);
+        // Update only the fields provided in the request
+        if (request.periodTime !== undefined) plan.period_time = request.periodTime;
+        if (request.maxFailureRetry !== undefined) plan.max_failure_retry = request.maxFailureRetry;
+        if (request.hooks !== undefined) plan.hook = request.hooks;
+        plan.updated_at = Date.now()
+
+        // Save the updated plan back to the map
         this.plans.set(plan.id, plan);
+
         return plan;
     }
+
 
     /**
      * Cancels a specified plan by ID.

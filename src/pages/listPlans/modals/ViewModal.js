@@ -17,9 +17,6 @@ const ViewModal = ({ open, onClose, planDetails }) => (
                     <Typography>
                         Updated At: {new Date(planDetails.plan.updated_at).toLocaleString()}
                     </Typography>
-                    <Typography>
-                        Latest Task: {planDetails.latestTask.id} (Status: {planDetails.latestTask.status})
-                    </Typography>
 
                     <br />
 
@@ -33,7 +30,18 @@ const ViewModal = ({ open, onClose, planDetails }) => (
 
                         <Accordion>
                             <AccordionSummary>Hooks Attached</AccordionSummary>
-                            <AccordionDetails><pre style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>                        {JSON.stringify(planDetails.plan.hooks)}</pre>
+                            <AccordionDetails><pre style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>                        {JSON.stringify(planDetails.plan.hook)}</pre>
+                            </AccordionDetails>
+                        </Accordion>
+
+                        <Accordion>
+                            <AccordionSummary>Latest Task Details</AccordionSummary>
+                            <AccordionDetails>
+                                <Typography>Last Executed At: {new Date(planDetails.latestTask.executed_at).toLocaleString()}</Typography>
+                                <Typography>
+                                    Latest Task: {planDetails.latestTask.id} (Status: {planDetails.latestTask.status})
+                                </Typography>
+                                <Typography>Next Excution At: {planDetails.latestTask.next_execution_at}</Typography>
                             </AccordionDetails>
                         </Accordion>
 

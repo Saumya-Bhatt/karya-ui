@@ -5,7 +5,7 @@ import CancelModal from "./modals/CancelModal";
 import ViewModal from "./modals/ViewModal";
 import UpdateModal from "./modals/UpdateModal";
 
-function ListJobs({ client, user }) {
+function ListPlans({ client, user }) {
     const [plans, setPlans] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [popups, setPopups] = useState([]);
@@ -40,6 +40,8 @@ function ListJobs({ client, user }) {
         setRefreshing(true);
         try {
             const plans = await client.listPlans(user.id);
+            console.log(plans)
+
             setPlans(plans);
         } catch (error) {
             console.error("Failed to refresh plans", error);
@@ -58,11 +60,20 @@ function ListJobs({ client, user }) {
         }
     };
 
+    const handleUpdate = async (planId) => {
+        try {
+            const details = await client.getPlan(planId);
+            setSelectedPlanDetails(details);
+            setUpdateDialog(true);
+        } catch (error) {
+            addPopup("Failed to fetch plan details", "warning");
+        }
+    }
+
     const handleCancelConfirm = async () => {
         try {
             await client.cancelPlan(selectedPlanId);
             addPopup("Plan cancelled successfully", "success");
-            setPlans((prev) => prev.filter((plan) => plan.id !== selectedPlanId));
         } catch (error) {
             addPopup("Failed to cancel plan", "warning");
         } finally {
@@ -112,7 +123,7 @@ function ListJobs({ client, user }) {
                                         color="primary" onClick={() => handleView(plan.id)}>View</Button>
                                     <Button size="sm"
                                         variant="soft"
-                                        color="warning" onClick={() => setSelectedPlanId(plan.id) || setUpdateDialog(true)}>Update</Button>
+                                        color="warning" onClick={() => handleUpdate(plan.id)}>Update</Button>
                                     <Button size="sm"
                                         variant="soft"
                                         color="danger" onClick={() => setSelectedPlanId(plan.id) || setShowCancelDialog(true)}>
@@ -138,9 +149,11 @@ function ListJobs({ client, user }) {
                 open={showUpdateDialog}
                 onClose={() => setUpdateDialog(false)}
                 planDetails={selectedPlanDetails}
+                client={client}
+                addPopup={addPopup}
             />
         </Box>
     );
 }
 
-export default ListJobs;
+export default ListPlans;

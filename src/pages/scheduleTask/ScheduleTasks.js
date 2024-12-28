@@ -4,7 +4,7 @@ import DefineAction from "./flow/DefineAction";
 import CreatePlan from "./flow/CreatePlan";
 import SubmitPlan from "./flow/SubmitPlan";
 
-function ScheduleJob({ client, user }) {
+function ScheduleTasks({ client, user }) {
     const [selectedCard, setSelectedCard] = useState(1);
 
     const [action, setAction] = useState(null)
@@ -20,7 +20,7 @@ function ScheduleJob({ client, user }) {
                 Karya Web Client
             </Typography>
             <Typography level="body1" sx={{ marginBottom: "16px" }}>
-                A browser-based client to schedule jobs on Karya.
+                A browser-based client to schedule tasks on Karya.
             </Typography>
 
             <br />
@@ -71,4 +71,4 @@ function ScheduleJob({ client, user }) {
     );
 }
 
-export default ScheduleJob;
+export default ScheduleTasks;

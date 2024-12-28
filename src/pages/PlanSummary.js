@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@mui/joy";
 
-function JobSummary() {
+function PlanSummary() {
     return (
         <div>
             <Typography level="h3">Job Summary</Typography>
@@ -10,4 +10,4 @@ function JobSummary() {
     );
 }
 
-export default JobSummary;
+export default PlanSummary;

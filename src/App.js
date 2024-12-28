@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import ListJobs from "./pages/listJobs/ListJobs";
-import JobSummary from "./pages/JobSummary";
+import ListPlans from "./pages/listPlans/ListPlans";
+import PlanSummary from "./pages/PlanSummary";
 import SignIn from "./pages/SignIn";
-import ScheduleJob from "./pages/scheduleJob/ScheduleJob";
+import ScheduleTasks from "./pages/scheduleTask/ScheduleTasks";
 import karyaClient from "./utils/GetKaryaClient"
 
 
@@ -42,9 +42,9 @@ function App() {
         <div style={{ flexGrow: 1, padding: "24px", overflowY: "auto" }}> {/* Scrollable content area */}
           <Routes>
             <Route path="/" element={user ? <Navigate to="/schedule" /> : <SignIn client={client} setUser={setUser} />} />
-            <Route path="/schedule" element={user ? <ScheduleJob client={client} user={user} /> : <Navigate to="/" />} />
-            <Route path="/jobs" element={user ? <ListJobs client={client} user={user} /> : <Navigate to="/" />} />
-            <Route path="/job-summary" element={user ? <JobSummary /> : <Navigate to="/" />} />
+            <Route path="/schedule" element={user ? <ScheduleTasks client={client} user={user} /> : <Navigate to="/" />} />
+            <Route path="/jobs" element={user ? <ListPlans client={client} user={user} /> : <Navigate to="/" />} />
+            <Route path="/job-summary" element={user ? <PlanSummary /> : <Navigate to="/" />} />
           </Routes>
         </div>
       </div>
