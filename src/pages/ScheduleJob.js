@@ -4,11 +4,11 @@ import DefineAction from "../components/flow/DefineAction";
 import CreatePlan from "../components/flow/CreatePlan";
 import SubmitPlan from "../components/flow/SubmitPlan";
 
-function ScheduleJob() {
+function ScheduleJob({ user }) {
     const [selectedCard, setSelectedCard] = useState(1);
 
     const [action, setAction] = useState(null)
-    const [draftPlan, setDraftPlan] = useState()
+    const [draftPlan, setDraftPlan] = useState(null)
 
     const handleCardClick = (cardNumber) => {
         setSelectedCard(cardNumber);
@@ -66,7 +66,7 @@ function ScheduleJob() {
 
             {selectedCard === 1 && <DefineAction setAction={setAction} existingAction={action} />}
             {selectedCard === 2 && <CreatePlan setDraftPlan={setDraftPlan} existingDraftPlan={draftPlan} />}
-            {selectedCard === 3 && <SubmitPlan action={action} draftPlan={draftPlan} />}
+            {selectedCard === 3 && <SubmitPlan user={user} action={action} draftPlan={draftPlan} setAction={setAction} setDraftPlan={setDraftPlan} />}
         </Box>
     );
 }

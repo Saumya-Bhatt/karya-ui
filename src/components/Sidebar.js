@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, List, ListItem, ListItemButton, Link, Divider } from "@mui/joy";
+import { Box, List, ListItem, ListItemButton, Link, Divider, Card, Typography } from "@mui/joy";
 import { NavLink } from "react-router-dom";
 
 function Sidebar() {
@@ -26,6 +26,11 @@ function Sidebar() {
         >
             <List>
                 <ListItem>
+                    <Card variant="outline" color="warning">
+                        <Typography level="body-sm">The web client currently does not support chained actions.</Typography>
+                    </Card>
+                </ListItem>
+                <ListItem>
                     <NavLink to="/schedule" style={navLinkStyles}>
                         <ListItemButton>Schedule Job</ListItemButton>
                     </NavLink>
@@ -48,7 +53,6 @@ function Sidebar() {
                         <ListItemButton>About Karya</ListItemButton>
                     </Link>
                 </ListItem>
-
 
             </List>
         </Box>

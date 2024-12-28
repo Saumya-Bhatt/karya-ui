@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Box, Typography, Grid, Card, Divider, Button } from "@mui/joy";
+import { SubmitPlanRequest } from 'karya-client/client/requests.js';
 import PopupStack from "../PopupStack";
 
 
-function SubmitPlan({ action, draftPlan, setAction, setDraftPlan }) {
+function SubmitPlan({ user, action, draftPlan, setAction, setDraftPlan }) {
 
     const [popups, setPopups] = useState([]);
     const addPopup = (popupMessage, type) => {
@@ -24,10 +25,16 @@ function SubmitPlan({ action, draftPlan, setAction, setDraftPlan }) {
         }
 
         try {
-            console.log("Submitting Plan : ", {
-                "action": action,
-                "planDraft": draftPlan
-            })
+            const request = new SubmitPlanRequest(
+                user.id,
+                draftPlan.description,
+                draftPlan.period_time,
+                draftPlan.plan_type,
+                action,
+                draftPlan.hooks,
+                draftPlan.max_failure_retry
+            )
+            console.log("Submitting Plan Request: ", request)
             addPopup("Plan submitted to Karya successfully!", "success")
         } catch (error) {
             console.log("Error creating SubmitPlanRequest", error)
@@ -82,7 +89,7 @@ function SubmitPlan({ action, draftPlan, setAction, setDraftPlan }) {
             <Grid container justifyContent="space-even" spacing={2}>
                 <Grid item>
                     <Button onClick={handleSubmit} variant="solid" color="primary">
-                        Save draft Action
+                        Schedule Plan
                     </Button>
                 </Grid>
                 <Grid item>

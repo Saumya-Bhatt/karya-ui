@@ -39,7 +39,7 @@ function App() {
         <div style={{ flexGrow: 1, padding: "24px", overflowY: "auto" }}> {/* Scrollable content area */}
           <Routes>
             <Route path="/" element={user ? <Navigate to="/schedule" /> : <SignIn setUser={setUser} />} />
-            <Route path="/schedule" element={user ? <ScheduleJob /> : <Navigate to="/" />} />
+            <Route path="/schedule" element={user ? <ScheduleJob user={user} /> : <Navigate to="/" />} />
             <Route path="/jobs" element={user ? <ListJobs /> : <Navigate to="/" />} />
             <Route path="/job-summary" element={user ? <JobSummary /> : <Navigate to="/" />} />
           </Routes>

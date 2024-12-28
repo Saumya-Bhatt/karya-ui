@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { Box, Button, Input, Typography } from "@mui/joy";
+import { User } from 'karya-client/entities/models'
 
 function SignIn({ setUser }) {
     const [username, setUsername] = useState("");
 
     const handleSignIn = () => {
         if (username.trim()) {
-            setUser(username.trim());
+            const user = new User({
+                id: "123",
+                name: username,
+                created_at: 12345
+            })
+            setUser(user);
         } else {
             alert("Please enter a valid username.");
         }

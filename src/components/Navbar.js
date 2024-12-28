@@ -21,7 +21,7 @@ function Navbar({ user, onSignOut }) {
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
                 <Typography level="body1">
-                    Scheduling jobs as user: <span style={{ fontWeight: "bold", color: "primary.200", fontStyle: "italic" }}>{user}</span>
+                    Scheduling jobs as user: <span style={{ fontWeight: "bold", color: "primary.200", fontStyle: "italic" }}>{user.name}</span>
                 </Typography>
                 <Button variant="soft" color="primary" onClick={onSignOut}>
                     Sign Out
