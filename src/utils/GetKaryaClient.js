@@ -10,7 +10,7 @@ function createKaryaRestClient(serverUrl) {
 
     const url = new URL(serverUrl);
     const protocol = url.protocol === 'https:' ? Protocol.HTTPS : Protocol.HTTP;
-    const config = ClientConfig({
+    const config = new ClientConfig({
         host: url.hostname,
         protocol: protocol,
         baseUrl: serverUrl,

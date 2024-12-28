@@ -21,7 +21,7 @@ function Navbar({ user, client, onSignOut }) {
                 <Stack direction="row" spacing={1}>
                     <Typography level="h4" sx={{ color: "white" }}>{name} v{version}</Typography>
                     {client instanceof DummyKaryaClient ?
-                        <Chip size="sm" color="primary" variant="solid">Dummy</Chip> : <Chip variant="solid" size="sm" color="primary">Live</Chip>}
+                        <Chip size="sm" color="primary" variant="solid">Dummy</Chip> : <Chip variant="solid" size="sm" color="success">Live Server</Chip>}
                 </Stack>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
