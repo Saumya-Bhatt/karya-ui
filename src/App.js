@@ -44,7 +44,7 @@ function App() {
             <Route path="/" element={user ? <Navigate to="/schedule" /> : <SignIn client={client} setUser={setUser} />} />
             <Route path="/schedule" element={user ? <ScheduleTasks client={client} user={user} /> : <Navigate to="/" />} />
             <Route path="/jobs" element={user ? <ListPlans client={client} user={user} /> : <Navigate to="/" />} />
-            <Route path="/job-summary" element={user ? <PlanSummary /> : <Navigate to="/" />} />
+            <Route path="/job-summary" element={user ? <PlanSummary client={client} /> : <Navigate to="/" />} />
           </Routes>
         </div>
       </div>

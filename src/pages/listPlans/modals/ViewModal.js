@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalDialog, Typography, Box, Button, AccordionGroup, Accordion, AccordionSummary, AccordionDetails } from "@mui/joy";
+import { Modal, ModalDialog, Typography, Box, Button, AccordionGroup, Accordion, AccordionSummary, AccordionDetails, Card, CardContent } from "@mui/joy";
 
 
 const ViewModal = ({ open, onClose, planDetails }) => (
@@ -8,13 +8,13 @@ const ViewModal = ({ open, onClose, planDetails }) => (
             <Typography level="h4">Plan Details</Typography>
             {planDetails ? (
                 <Box>
-                    <Typography>ID: {planDetails.plan.id}</Typography>
-                    <Typography>Description: {planDetails.plan.description}</Typography>
-                    <Typography>Status: {planDetails.plan.status}</Typography>
-                    <Typography>
+                    <Typography level="body-sm">ID: {planDetails.plan.id}</Typography>
+                    <Typography level="body-sm">Description: {planDetails.plan.description}</Typography>
+                    <Typography level="body-sm">Status: {planDetails.plan.status}</Typography>
+                    <Typography level="body-sm">
                         Created At: {new Date(planDetails.plan.created_at).toLocaleString()}
                     </Typography>
-                    <Typography>
+                    <Typography level="body-sm">
                         Updated At: {new Date(planDetails.plan.updated_at).toLocaleString()}
                     </Typography>
 
@@ -30,7 +30,22 @@ const ViewModal = ({ open, onClose, planDetails }) => (
 
                         <Accordion>
                             <AccordionSummary>Hooks Attached</AccordionSummary>
-                            <AccordionDetails><pre style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>                        {JSON.stringify(planDetails.plan.hook)}</pre>
+                            <AccordionDetails>
+                                <Box sx={{
+                                    maxHeight: "200px",
+                                    overflowY: "auto"
+                                }}>
+
+                                    {planDetails.plan.hook.length > 0 ? (planDetails.plan.hook.map((hook, index) => (
+                                        <Card variant="soft" key={index} sx={{ mb: 2 }}>
+                                            <CardContent>
+                                                <pre style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                                                    {JSON.stringify(hook, null, 2)}
+                                                </pre>
+                                            </CardContent>
+                                        </Card>
+                                    ))) : (<Typography>No tasks available</Typography>)}
+                                </Box>
                             </AccordionDetails>
                         </Accordion>
 

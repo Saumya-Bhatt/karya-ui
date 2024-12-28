@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Box, Button, Table, Stack } from "@mui/joy";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import PopupStack from "../../components/PopupStack";
 import CancelModal from "./modals/CancelModal";
 import ViewModal from "./modals/ViewModal";
@@ -81,6 +82,14 @@ function ListPlans({ client, user }) {
         }
     };
 
+    const handleCopyPlanId = (planId) => {
+        navigator.clipboard.writeText(planId).then(() => {
+            addPopup("Plan ID copied to clipboard!", "success");
+        }).catch(() => {
+            addPopup("Failed to copy Plan ID", "warning");
+        });
+    };
+
     return (
         <Box>
             <PopupStack popups={popups} onRemove={removePopup} />
@@ -95,7 +104,7 @@ function ListPlans({ client, user }) {
             >
                 {refreshing ? "Refreshing..." : "Refresh Plans"}
             </Button>
-            <Table sx={{ width: "auto" }} size="md" hoverRow>
+            <Table stickyHeader sx={{ width: "auto" }} size="md" hoverRow>
                 <thead>
                     <tr>
                         <th>Plan ID</th>
@@ -110,7 +119,14 @@ function ListPlans({ client, user }) {
                 <tbody>
                     {plans.map((plan) => (
                         <tr key={plan.id}>
-                            <td>{plan.id}</td>
+                            <td>
+                                <ContentCopyIcon
+                                    sx={{ cursor: "pointer", fontSize: "1rem", marginLeft: "5px" }}
+                                    onClick={() => handleCopyPlanId(plan.id)}
+                                />
+                                {" "}{plan.id}
+
+                            </td>
                             <td>{plan.description}</td>
                             <td>{plan.status}</td>
                             <td>{plan.period_time}</td>

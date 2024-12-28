@@ -51,7 +51,7 @@ const UpdateModal = ({ open, onClose, planDetails, client, addPopup }) => {
             onClose();
         } catch (error) {
             console.error("Failed to update plan:", error);
-            addPopup("Failed to update plan", "warning");
+            addPopup(`Failed to update plan : ${error}`, "warning");
         }
     };
 

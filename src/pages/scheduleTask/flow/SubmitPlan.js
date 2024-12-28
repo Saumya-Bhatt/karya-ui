@@ -44,7 +44,7 @@ function SubmitPlan({ client, user, action, draftPlan, setAction, setDraftPlan }
             addPopup("Plan submitted to Karya successfully!", "success")
         } catch (error) {
             console.log("Error creating SubmitPlanRequest", error)
-            addPopup("Error submitting plan to Karya", "warning")
+            addPopup(`Error submitting plan to Karya: ${error}`, "warning")
         }
     }
 

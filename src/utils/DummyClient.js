@@ -1,4 +1,4 @@
-import { User, Plan, Task } from 'karya-client/entities/models.js';
+import { User, Plan, Task, ErrorLog } from 'karya-client/entities/models.js';
 import { PlanStatus, TaskStatus } from 'karya-client/entities/constants.js';
 import { GetPlanResponse, GetSummaryResponse } from 'karya-client/client/responses.js';
 
@@ -119,7 +119,19 @@ export class DummyKaryaClient {
     async getSummary(planId) {
         const plan = this.plans.get(planId);
         if (!plan) throw new Error(`Summary for plan ID '${planId}' not found`);
-        return new GetSummaryResponse({ plan: plan, tasks: [], errorLogs: [] });
+        return new GetSummaryResponse({
+            plan: plan, tasks: [(new Task('task-123', planId, 5, TaskStatus.SUCCESS, Date.now(), Date.now(), undefined)), (new Task('task-123', planId, 5, TaskStatus.FAILURE, Date.now(), Date.now(), undefined))], errorLogs: [(new ErrorLog(
+                planId, // Plan ID
+                "Hook execution failed due to a timeout.", // Error message
+                new ErrorLog.HookErrorLog(), // Type of error (HookErrorLog)
+                Date.now() // Timestamp
+            )), (new ErrorLog(
+                planId, // Plan ID
+                "Task execution failed due to insufficient resources.", // Error message
+                new ErrorLog.ExecutorErrorLog("task-456"), // Type of error (ExecutorErrorLog with Task ID)
+                Date.now() // Timestamp
+            ))]
+        });
     }
 
     /**

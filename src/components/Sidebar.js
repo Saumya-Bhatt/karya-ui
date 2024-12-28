@@ -42,7 +42,7 @@ function Sidebar() {
                 </ListItem>
                 <ListItem>
                     <NavLink to="/job-summary" style={navLinkStyles}>
-                        <ListItemButton>Get Plan Summary</ListItemButton>
+                        <ListItemButton>Plan Summary</ListItemButton>
                     </NavLink>
                 </ListItem>
 
