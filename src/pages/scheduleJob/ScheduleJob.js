@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Divider, Grid, Card, Typography, Box } from "@mui/joy";
-import DefineAction from "../components/flow/DefineAction";
-import CreatePlan from "../components/flow/CreatePlan";
-import SubmitPlan from "../components/flow/SubmitPlan";
+import DefineAction from "./flow/DefineAction";
+import CreatePlan from "./flow/CreatePlan";
+import SubmitPlan from "./flow/SubmitPlan";
 
 function ScheduleJob({ client, user }) {
     const [selectedCard, setSelectedCard] = useState(1);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Typography, Box, Input, Textarea, Button, Grid } from "@mui/joy";
-import PopupStack from "../PopupStack";
+import PopupStack from "../../../components/PopupStack";
 import { EmailRequest } from "karya-client/entities/actions.js";
 
 function SendEmailAction({ setAction, existingAction }) {

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Typography, Box, Input, Textarea, Button, Grid } from "@mui/joy";
-import PopupStack from "../PopupStack";
-import { SlackMessageRequest } from "karya-client/entities/actions.js";
+import PopupStack from "../../../components/PopupStack";
+import { KafkaProducerRequest } from "karya-client/entities/actions.js";
 
-function SlackMessageAction({ setAction, existingAction }) {
-    const [channel, setChannel] = useState(existingAction == null ? "" : existingAction.channel);
+function PushKafkaAction({ setAction, existingAction }) {
+    const [topic, setTopic] = useState(existingAction == null ? "" : existingAction.topic);
     const [message, setMessage] = useState(existingAction == null ? "" : existingAction.message);
+    const [producerKey, setProducerKey] = useState(existingAction == null ? "" : existingAction.key)
     const [popups, setPopups] = useState([]);
 
-    const addPopup = (message, type) => {
-        setPopups((prevPopups) => [...prevPopups, { message, type }]);
+    const addPopup = (popupMessage, type) => {
+        setPopups((prevPopups) => [...prevPopups, { message: popupMessage, type }]);
     };
 
     const removePopup = (index) => {
@@ -17,24 +18,25 @@ function SlackMessageAction({ setAction, existingAction }) {
     };
 
     const handleSubmit = () => {
-        if (!channel || !message) {
-            addPopup("Channel and message cannot be empty.", "warning");
+        if (!topic || !message) {
+            addPopup("Kafka topic and message cannot be empty.", "warning");
             return;
         }
 
         try {
-            const slackAction = new SlackMessageRequest(channel, message);
-            console.log("SlackMessage created:", slackAction);
-            setAction(slackAction)
-            addPopup("SlackMessage created successfully!", "success");
+            const kafkaAction = new KafkaProducerRequest(topic, message, producerKey);
+            console.log("KafkaProducerRequest created:", kafkaAction);
+            setAction(kafkaAction)
+
+            addPopup("KafkaProducerRequest created successfully!", "success");
         } catch (error) {
-            console.error("Error creating SlackMessage:", error);
-            addPopup("Failed to create SlackMessage.", "warning");
+            console.error("Error creating KafkaProducerRequest:", error);
+            addPopup("Failed to create KafkaProducerRequest.", "warning");
         }
     };
 
     const handleClear = () => {
-        setChannel("");
+        setTopic("");
         setMessage("");
         setAction(null)
     };
@@ -45,29 +47,37 @@ function SlackMessageAction({ setAction, existingAction }) {
             <PopupStack popups={popups} onRemove={removePopup} />
 
             <Typography level="h6" sx={{ marginBottom: "16px" }}>
-                Send a Message to Slack
+                Push a message to Kafka
             </Typography>
 
-            {/* Slack Channel Input */}
+            {/* Kafka Topic Input */}
             <Grid container spacing={2} sx={{ marginBottom: "16px" }}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                     <Input
-                        placeholder="Slack Channel"
-                        value={channel}
-                        onChange={(e) => setChannel(e.target.value)}
+                        placeholder="Kafka Topic"
+                        value={topic}
+                        onChange={(e) => setTopic(e.target.value)}
+                        fullWidth
+                    />
+                </Grid>
+                <Grid xs={12} sm={6}>
+                    <Input
+                        placeholder="Producer Key (Optional)"
+                        value={producerKey}
+                        onChange={(e) => setProducerKey(e.target.value)}
                         fullWidth
                     />
                 </Grid>
             </Grid>
 
-            {/* Slack Message Input */}
+            {/* Kafka Message Input */}
             <Grid container spacing={2} sx={{ marginBottom: "16px" }}>
                 <Grid item xs={12}>
                     <Textarea
-                        placeholder="Message"
+                        placeholder="Kafka Message"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        minRows={6}
+                        minRows={4}
                         fullWidth
                     />
                 </Grid>
@@ -90,4 +100,4 @@ function SlackMessageAction({ setAction, existingAction }) {
     );
 }
 
-export default SlackMessageAction;
+export default PushKafkaAction;

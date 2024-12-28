@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Typography, Box, Input, Textarea, Select, Button, Grid, IconButton, Option } from "@mui/joy";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import PopupStack from "../PopupStack";
+import PopupStack from "../../../components/PopupStack";
 import { RestApiRequest } from "karya-client/entities/actions.js";
 import { Protocol, Method } from "karya-client/entities/constants.js";
 

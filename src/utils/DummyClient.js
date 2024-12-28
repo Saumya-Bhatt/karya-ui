@@ -20,7 +20,7 @@ export class DummyKaryaClient {
         const user = new User({
             id: `user-${this.nextUserId++}`,
             name: request.name,
-            created_at: 9999999, // Dummy timestamp
+            created_at: Date.now(), // Dummy timestamp
         });
         this.users.set(user.name, user);
         return user;
@@ -54,8 +54,8 @@ export class DummyKaryaClient {
             action: request.action,
             hook: request.hooks,
             parent_plan_id: undefined,
-            created_at: 999999, // Dummy timestamp
-            updated_at: 999999, // Dummy timestamp
+            created_at: Date.now(), // Dummy timestamp
+            updated_at: Date.now(), // Dummy timestamp
         });
         this.plans.set(plan.id, plan);
         return plan;
@@ -71,7 +71,7 @@ export class DummyKaryaClient {
         if (!plan) throw new Error(`Plan with ID '${planId}' not found`);
         return new GetPlanResponse({
             plan: plan,
-            latestTask: new Task('task-123', planId, 5, TaskStatus.PROCESSING, 99999, 9999, undefined),
+            latestTask: new Task('task-123', planId, 5, TaskStatus.PROCESSING, Date.now(), Date.now(), undefined),
         });
     }
 

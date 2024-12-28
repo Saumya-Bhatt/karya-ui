@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Grid, Card, Divider, Button } from "@mui/joy";
 import { SubmitPlanRequest } from 'karya-client/client/requests.js';
-import PopupStack from "../PopupStack";
+import PopupStack from "../../../components/PopupStack";
 
 
 function SubmitPlan({ client, user, action, draftPlan, setAction, setDraftPlan }) {

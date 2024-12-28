@@ -5,7 +5,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { OneTime, Recurring } from 'karya-client/entities/plan-types.js'
 import dayjs from "dayjs";
-import PopupStack from "../PopupStack";
+import PopupStack from "../../../components/PopupStack";
 import AttachHookModal from "./AttachHookModal";
 
 function CreatePlan({ setDraftPlan, existingDraftPlan }) {
