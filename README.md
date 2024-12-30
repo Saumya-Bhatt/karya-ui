@@ -1,7 +1,9 @@
 # karya-ui
 Browser-based UI to interact with [Karya](https://github.com/Saumya-Bhatt/karya) the distributed task execution framework.
 
-**Dummy Endpoint:** [https://saumya-bhatt.github.io/karya-ui/](https://saumya-bhatt.github.io/karya-ui/)
+**NOTE: WEB-UI CURRENTLY DOES NOT SUPPORT SCHEDULING CHAINED PLANS**
+
+**Demo:** [https://saumya-bhatt.github.io/karya-ui/](https://saumya-bhatt.github.io/karya-ui/)
 
 > Leave the Endpoint Blank to view the interface with stubbed responses.
 
