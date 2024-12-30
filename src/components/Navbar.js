@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Button, Chip, Stack } from "@mui/joy";
-import { DummyKaryaClient } from "../utils/DummyClient";
+import { KaryaDummyClient } from "karya-client/client/karya-dummy-client";
 
 function Navbar({ user, client, onSignOut }) {
     const { name, version } = require("../../package.json"); // Importing package.json content
@@ -20,7 +20,7 @@ function Navbar({ user, client, onSignOut }) {
             <Box>
                 <Stack direction="row" spacing={1}>
                     <Typography level="h4" sx={{ color: "white" }}>{name} v{version}</Typography>
-                    {client instanceof DummyKaryaClient ?
+                    {client instanceof KaryaDummyClient ?
                         <Chip size="sm" color="primary" variant="solid">Dummy</Chip> : <Chip variant="solid" size="sm" color="success">Live Server</Chip>}
                 </Stack>
             </Box>
