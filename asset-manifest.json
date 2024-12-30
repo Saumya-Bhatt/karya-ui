@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.e6c13ad2.css",
-    "main.js": "/static/js/main.fcb71cb7.js",
-    "index.html": "/index.html",
-    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
-    "main.fcb71cb7.js.map": "/static/js/main.fcb71cb7.js.map"
+    "main.css": "/karya-ui/static/css/main.e6c13ad2.css",
+    "main.js": "/karya-ui/static/js/main.c2964795.js",
+    "index.html": "/karya-ui/index.html",
+    "main.e6c13ad2.css.map": "/karya-ui/static/css/main.e6c13ad2.css.map",
+    "main.c2964795.js.map": "/karya-ui/static/js/main.c2964795.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.fcb71cb7.js"
+    "static/js/main.c2964795.js"
   ]
 }
