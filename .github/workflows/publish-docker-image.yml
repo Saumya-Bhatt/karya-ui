@@ -5,15 +5,15 @@ on:
     branches:
       - main
       - dockerize
-#     paths:
-#       - 'src/**/*'
-#       - 'package.json'
-#   pull_request:
-#     branches:
-#       - main
-#     paths:
-#       - 'src/**/*'
-#       - 'package.json'
+    paths:
+      - 'src/**/*'
+      - 'package.json'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/**/*'
+      - 'package.json'
 
 jobs:
   check-tag:
