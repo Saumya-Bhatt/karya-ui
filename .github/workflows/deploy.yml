@@ -5,13 +5,12 @@ on:
     branches:
       - main
       - dockerize
-    # paths:
-    #   - 'src/**'
-    #   - 'package.json'
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
       - name: Checkout code
@@ -28,12 +27,8 @@ jobs:
       - name: Build the React app
         run: npm run build
 
-      - name: Set Git config for deployment
-        run: |
-          git config --global user.email "saumya-bhatt@users.noreply.github.com"
-          git config --global user.name "GitHub Actions"
-
       - name: Deploy to GitHub Pages
-        run: npm run deploy
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build # The folder the action should deploy
+          branch: gh-pages # The branch the action should deploy to
