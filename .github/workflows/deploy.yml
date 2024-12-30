@@ -5,9 +5,9 @@ on:
     branches:
       - main
       - dockerize
-    paths:
-      - 'src/**'
-      - 'package.json'
+    # paths:
+    #   - 'src/**'
+    #   - 'package.json'
 
 jobs:
   build-and-deploy:
