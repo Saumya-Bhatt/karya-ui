@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Box, Button, Input, Typography } from "@mui/joy";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
-import { CreateUserRequest } from "karya-client/client/requests";
-import PopupStack from "../components/PopupStack";
-import { KaryaRestClient } from "karya-client/client/karya-rest-client.js";
-import { KaryaDummyClient } from "karya-client/client/karya-dummy-client.js";
-import { ClientConfig } from "karya-client/client/config.js";
+import React, { useState } from 'react';
+import { Box, Button, Input, Typography } from '@mui/joy';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import StepContent from '@mui/material/StepContent';
+import { CreateUserRequest } from 'karya-client/client/requests';
+import PopupStack from '../components/PopupStack';
+import { KaryaRestClient } from 'karya-client/client/karya-rest-client.js';
+import { KaryaDummyClient } from 'karya-client/client/karya-dummy-client.js';
+import { ClientConfig } from 'karya-client/client/config.js';
 
 function createKaryaRestClient(serverUrl) {
   if (!serverUrl) {
-    throw new Error("Invalid server URL.");
+    throw new Error('Invalid server URL.');
   }
 
   const config = new ClientConfig(new URL(serverUrl));
@@ -21,8 +21,8 @@ function createKaryaRestClient(serverUrl) {
 }
 
 function SignIn({ client, setClient, setUser }) {
-  const [url, setUrl] = useState("");
-  const [username, setUsername] = useState("");
+  const [url, setUrl] = useState('');
+  const [username, setUsername] = useState('');
   const [activeStep, setActiveStep] = useState(0);
   const [popups, setPopups] = useState([]);
 
@@ -42,7 +42,7 @@ function SignIn({ client, setClient, setUser }) {
           setClient(clientInstance);
           setActiveStep(1);
         } catch (error) {
-          addPopup("Invalid URL or unable to connect.", "error");
+          addPopup('Invalid URL or unable to connect.', 'error');
         }
       } else {
         const clientInstance = new KaryaDummyClient();
@@ -55,13 +55,13 @@ function SignIn({ client, setClient, setUser }) {
         try {
           user = await client.getUser(username.trim());
         } catch (error) {
-          console.log("User does not exist. Creating a new one.");
+          console.log('User does not exist. Creating a new one.');
           try {
             user = await client.createUser(
-              new CreateUserRequest(username.trim())
+              new CreateUserRequest(username.trim()),
             );
           } catch (error) {
-            addPopup("Unable to connect to client: " + error, "error");
+            addPopup('Unable to connect to client: ' + error, 'error');
             console.log(error);
             return;
           }
@@ -69,14 +69,14 @@ function SignIn({ client, setClient, setUser }) {
         console.log(user); // Log the resolved user object
         setUser(user); // Set the user after it's resolved
       } else {
-        addPopup("Please enter a valid username.", "error");
+        addPopup('Please enter a valid username.', 'error');
       }
     }
   };
 
   const steps = [
     {
-      label: "Enter Karya URL",
+      label: 'Enter Karya URL',
       description: (
         <>
           <Typography level="body-sm">
@@ -87,13 +87,13 @@ function SignIn({ client, setClient, setUser }) {
             placeholder="Enter API URL"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            sx={{ width: "300px", fontSize: "1rem", mt: 2 }}
+            sx={{ width: '300px', fontSize: '1rem', mt: 2 }}
           />
         </>
       ),
     },
     {
-      label: "Enter Username",
+      label: 'Enter Username',
       description: (
         <>
           <Typography level="body-sm">
@@ -103,7 +103,7 @@ function SignIn({ client, setClient, setUser }) {
             placeholder="Enter username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            sx={{ width: "300px", fontSize: "1rem", mt: 2 }}
+            sx={{ width: '300px', fontSize: '1rem', mt: 2 }}
           />
         </>
       ),
@@ -113,12 +113,12 @@ function SignIn({ client, setClient, setUser }) {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        gap: "16px",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        gap: '16px',
       }}
     >
       <PopupStack popups={popups} onRemove={removePopup} />
@@ -135,7 +135,7 @@ function SignIn({ client, setClient, setUser }) {
                   onClick={handleNext}
                   sx={{ mt: 1 }}
                 >
-                  {index === steps.length - 1 ? "Sign In" : "Next"}
+                  {index === steps.length - 1 ? 'Sign In' : 'Next'}
                 </Button>
               </Box>
             </StepContent>

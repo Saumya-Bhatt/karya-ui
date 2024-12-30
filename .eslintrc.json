@@ -1,0 +1,18 @@
+{
+    "extends": [
+        "react-app",
+        "react-app/jest"
+    ],
+    "plugins": [
+        "react"
+    ],
+    "settings": {
+        "react": {
+            "version": "detect" // Automatically detects the React version from your project
+        }
+    },
+    "rules": {
+        "react/react-in-jsx-scope": "off", // React 17 and later does not require `React` in scope
+        "react/prop-types": "off" // Optional: Disable prop types if using TypeScript or TypeScript-like checks
+    }
+}
