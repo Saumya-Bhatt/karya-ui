@@ -19,6 +19,7 @@ jobs:
   check-tag:
     runs-on: ubuntu-latest
     outputs:
+      repo_owner_lowercase: ${{ steps.set-repo-owner.outputs.repo_owner_lowercase }}
       version: ${{ steps.get_version.outputs.version }}
       tag-exists: ${{ steps.check-tag.outputs.tag-exists }}
 
@@ -31,6 +32,12 @@ jobs:
         run: |
           VERSION=$(jq -r '.version' package.json)
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Set repository owner to lowercase
+        id: set-repo-owner
+        run: |
+          REPO_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+          echo "repo_owner_lowercase=$REPO_OWNER" >> $GITHUB_OUTPUT
 
       - name: Check if tag already exists
         id: check-tag
@@ -85,9 +92,12 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/karya-ui:${{ needs.check-tag.outputs.version }}
-            ghcr.io/${{ secrets.GHCR_USERNAME }}/karya-ui:${{ needs.check-tag.outputs.version }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/karya-ui:latest
+            ghcr.io/${{ needs.check-tag.outputs.repo_owner_lowercase }}/karya-ui:${{ needs.check-tag.outputs.version }}
+            ghcr.io/${{ needs.check-tag.outputs.repo_owner_lowercase }}/karya-ui:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          platforms: linux/amd64,linux/arm64
 
       - name: Move cache
         run: |
