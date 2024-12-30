@@ -1,7 +1,8 @@
 {
   "name": "karya-ui",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage": "https://saumya-bhatt.github.io/karya-ui",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
