@@ -44,7 +44,7 @@ const ViewModal = ({ open, onClose, planDetails }) => (
                                                 </pre>
                                             </CardContent>
                                         </Card>
-                                    ))) : (<Typography>No tasks available</Typography>)}
+                                    ))) : (<Typography level="body-sm">No Hooks attached</Typography>)}
                                 </Box>
                             </AccordionDetails>
                         </Accordion>
@@ -52,11 +52,11 @@ const ViewModal = ({ open, onClose, planDetails }) => (
                         <Accordion>
                             <AccordionSummary>Latest Task Details</AccordionSummary>
                             <AccordionDetails>
-                                <Typography>Last Executed At: {new Date(planDetails.latestTask.executed_at).toLocaleString()}</Typography>
+                                <Typography>Last Executed At: {new Date(planDetails.latest_task.executed_at).toLocaleString()}</Typography>
                                 <Typography>
-                                    Latest Task: {planDetails.latestTask.id} (Status: {planDetails.latestTask.status})
+                                    Latest Task: {planDetails.latest_task.id} (Status: {planDetails.latest_task.status})
                                 </Typography>
-                                <Typography>Next Excution At: {planDetails.latestTask.next_execution_at}</Typography>
+                                <Typography>Next Excution At: {planDetails.latest_task.next_execution_at}</Typography>
                             </AccordionDetails>
                         </Accordion>
 

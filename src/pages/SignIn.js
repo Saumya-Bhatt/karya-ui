@@ -27,6 +27,7 @@ function SignIn({ client, setUser }) {
                     user = await client.createUser(new CreateUserRequest(username.trim()));
                 } catch (error) {
                     addPopup("Unable to connect to client: ", error)
+                    console.log(error)
                     return
                 }
 

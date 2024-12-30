@@ -1,6 +1,9 @@
 import React from "react";
 import { Box, List, ListItem, ListItemButton, Link, Divider, Card, Typography } from "@mui/joy";
 import { NavLink } from "react-router-dom";
+import ScheduleOutlinedIcon from '@mui/icons-material/ScheduleOutlined';
+import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
+import SummarizeOutlinedIcon from '@mui/icons-material/SummarizeOutlined';
 
 function Sidebar() {
     const navLinkStyles = ({ isActive }) => ({
@@ -32,17 +35,17 @@ function Sidebar() {
                 </ListItem>
                 <ListItem>
                     <NavLink to="/schedule" style={navLinkStyles}>
-                        <ListItemButton>Schedule Tasks</ListItemButton>
+                        <ListItemButton><ScheduleOutlinedIcon />Schedule Tasks</ListItemButton>
                     </NavLink>
                 </ListItem>
                 <ListItem>
                     <NavLink to="/jobs" style={navLinkStyles}>
-                        <ListItemButton>List all Plans</ListItemButton>
+                        <ListItemButton><FormatListBulletedOutlinedIcon />List all Plans</ListItemButton>
                     </NavLink>
                 </ListItem>
                 <ListItem>
                     <NavLink to="/job-summary" style={navLinkStyles}>
-                        <ListItemButton>Plan Summary</ListItemButton>
+                        <ListItemButton><SummarizeOutlinedIcon />Plan Summary</ListItemButton>
                     </NavLink>
                 </ListItem>
 

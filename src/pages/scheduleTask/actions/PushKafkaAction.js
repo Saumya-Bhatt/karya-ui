@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Box, Input, Textarea, Button, Grid } from "@mui/joy";
+import { Box, Input, Textarea, Button, Grid } from "@mui/joy";
 import PopupStack from "../../../components/PopupStack";
 import { KafkaProducerRequest } from "karya-client/entities/actions.js";
 
@@ -45,10 +45,6 @@ function PushKafkaAction({ setAction, existingAction }) {
         <Box>
             {/* Popup Stack */}
             <PopupStack popups={popups} onRemove={removePopup} />
-
-            <Typography level="h6" sx={{ marginBottom: "16px" }}>
-                Push a message to Kafka
-            </Typography>
 
             {/* Kafka Topic Input */}
             <Grid container spacing={2} sx={{ marginBottom: "16px" }}>

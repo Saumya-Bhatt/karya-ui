@@ -73,7 +73,7 @@ function PlanSummary({ client }) {
                             <Typography level="body-sm">Period Time: {summary.plan.period_time}</Typography>
                             <Typography level="body-sm">Max Failure Retry: {summary.plan.max_failure_retry}</Typography>
                             <Typography level="body-sm">Created At: {new Date(summary.plan.created_at).toLocaleString()}</Typography>
-                            <Typography level="body-sm">Total tasks: {summary.plan.hook.length}</Typography>
+                            <Typography level="body-sm">Total tasks: {summary.tasks.length}</Typography>
 
                             {/* Accordion for Action and Hook */}
                             <Accordion sx={{ mt: 2 }}>
@@ -105,7 +105,7 @@ function PlanSummary({ client }) {
                                                     </pre>
                                                 </CardContent>
                                             </Card>
-                                        ))) : (<Typography>No tasks available</Typography>)}
+                                        ))) : (<Typography level="body-sm">[]</Typography>)}
                                     </Box>
 
                                 </AccordionDetails>
@@ -157,8 +157,8 @@ function PlanSummary({ client }) {
                                 padding: "10px",
                             }}
                         >
-                            {summary.errorLogs.length > 0 ? (
-                                summary.errorLogs.map((log, index) => (
+                            {summary.error_logs.length > 0 ? (
+                                summary.error_logs.map((log, index) => (
                                     <Card key={index} sx={{ mb: 2 }}>
                                         <CardContent>
                                             <pre style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>

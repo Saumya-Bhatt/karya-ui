@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Box, Button, Table, Stack } from "@mui/joy";
+import { Pagination } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import PopupStack from "../../components/PopupStack";
 import CancelModal from "./modals/CancelModal";
 import ViewModal from "./modals/ViewModal";
 import UpdateModal from "./modals/UpdateModal";
 
+const ROWS_PER_PAGE = 20;
+
 function ListPlans({ client, user }) {
     const [plans, setPlans] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
     const [refreshing, setRefreshing] = useState(false);
     const [popups, setPopups] = useState([]);
     const [showCancelDialog, setShowCancelDialog] = useState(false);
@@ -24,31 +29,34 @@ function ListPlans({ client, user }) {
         setPopups((prev) => prev.filter((_, i) => i !== index));
     };
 
-    useEffect(() => {
-        const fetchPlans = async () => {
-            try {
-                const plans = await client.listPlans(user.id);
-                setPlans(plans);
-            } catch (error) {
-                console.error("Failed to fetch plans", error);
-            }
-        };
+    const fetchPlans = async (page = 0) => {
+        try {
+            const response = await client.listPlans(user.id, page);
+            console.log(response)
+            setPlans(response.plans);
+            setTotalPages(Math.ceil(response.total / ROWS_PER_PAGE));
+        } catch (error) {
+            console.error("Failed to fetch plans", error);
+        }
+    };
 
-        fetchPlans();
-    }, [client, user.id]);
+    useEffect(() => {
+        fetchPlans(currentPage);
+    }, [client, user.id, currentPage]);
 
     const handleRefresh = async () => {
         setRefreshing(true);
         try {
-            const plans = await client.listPlans(user.id);
-            console.log(plans)
-
-            setPlans(plans);
+            await fetchPlans(currentPage);
         } catch (error) {
             console.error("Failed to refresh plans", error);
         } finally {
             setRefreshing(false);
         }
+    };
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value - 1); // Pagination component uses 1-based indexing
     };
 
     const handleView = async (planId) => {
@@ -69,12 +77,13 @@ function ListPlans({ client, user }) {
         } catch (error) {
             addPopup("Failed to fetch plan details", "warning");
         }
-    }
+    };
 
     const handleCancelConfirm = async () => {
         try {
             await client.cancelPlan(selectedPlanId);
             addPopup("Plan cancelled successfully", "success");
+            await fetchPlans(currentPage); // Refresh the plans after cancellation
         } catch (error) {
             addPopup("Failed to cancel plan", "warning");
         } finally {
@@ -104,7 +113,8 @@ function ListPlans({ client, user }) {
             >
                 {refreshing ? "Refreshing..." : "Refresh Plans"}
             </Button>
-            <Table stickyHeader sx={{ width: "auto" }} size="md" hoverRow>
+            <Table stickyHeader sx={{ width: "auto" }} size="md" borderAxis="yBetween" hoverRow>
+                <caption>Plans submitted now will be visible within 30 seconds of submition.</caption>
                 <thead>
                     <tr>
                         <th>Plan ID</th>
@@ -125,7 +135,6 @@ function ListPlans({ client, user }) {
                                     onClick={() => handleCopyPlanId(plan.id)}
                                 />
                                 {" "}{plan.id}
-
                             </td>
                             <td>{plan.description}</td>
                             <td>{plan.status}</td>
@@ -151,6 +160,12 @@ function ListPlans({ client, user }) {
                     ))}
                 </tbody>
             </Table>
+            <Pagination
+                count={totalPages}
+                page={currentPage + 1} // Pagination component uses 1-based indexing
+                onChange={handlePageChange}
+                sx={{ marginTop: 2 }}
+            />
             <CancelModal
                 open={showCancelDialog}
                 onClose={() => setShowCancelDialog(false)}

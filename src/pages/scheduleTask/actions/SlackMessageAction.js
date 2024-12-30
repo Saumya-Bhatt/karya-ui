@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Box, Input, Textarea, Button, Grid } from "@mui/joy";
+import { Box, Input, Textarea, Button, Grid } from "@mui/joy";
 import PopupStack from "../../../components/PopupStack";
 import { SlackMessageRequest } from "karya-client/entities/actions.js";
 
@@ -43,10 +43,6 @@ function SlackMessageAction({ setAction, existingAction }) {
         <Box>
             {/* Popup Stack */}
             <PopupStack popups={popups} onRemove={removePopup} />
-
-            <Typography level="h6" sx={{ marginBottom: "16px" }}>
-                Send a Message to Slack
-            </Typography>
 
             {/* Slack Channel Input */}
             <Grid container spacing={2} sx={{ marginBottom: "16px" }}>

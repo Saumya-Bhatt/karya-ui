@@ -11,7 +11,7 @@
     "@mui/x-date-pickers": "^7.23.3",
     "cra-template": "1.2.0",
     "dayjs": "^1.11.13",
-    "karya-client": "^1.1.0",
+    "karya-client": "^1.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.1",

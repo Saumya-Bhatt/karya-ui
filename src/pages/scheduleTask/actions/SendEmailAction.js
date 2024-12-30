@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Box, Input, Textarea, Button, Grid } from "@mui/joy";
+import { Box, Input, Textarea, Button, Grid } from "@mui/joy";
 import PopupStack from "../../../components/PopupStack";
 import { EmailRequest } from "karya-client/entities/actions.js";
 
@@ -45,10 +45,6 @@ function SendEmailAction({ setAction, existingAction }) {
         <Box>
             {/* Popup Stack */}
             <PopupStack popups={popups} onRemove={removePopup} />
-
-            <Typography level="h6" sx={{ marginBottom: "16px" }}>
-                Send an Email
-            </Typography>
 
             {/* Recipient Email Input */}
             <Grid container spacing={2} sx={{ marginBottom: "16px" }}>
