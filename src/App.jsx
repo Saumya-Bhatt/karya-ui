@@ -39,7 +39,7 @@ function App() {
   };
 
   return (
-    <Router basename="{process.env.PUBLIC_URL}">
+    <Router basename="/karya-ui">
       {user && <Navbar user={user} client={client} onSignOut={handleSignOut} />}
       <div style={{ display: "flex", height: "100vh" }}>
         {user ? <Sidebar /> : <></>}
