@@ -1,0 +1,38 @@
+name: Lint and Format Check
+
+on:
+  push:
+    branches:
+      - main
+      - dockerize
+#   pull_request:
+#     branches:
+#       - main
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'  # Set the appropriate Node.js version for your project
+
+    - name: Install dependencies
+      run: |
+        npm install
+        npm run lint
+        npm run format
+
+    - name: Run linting and formatting checks
+      run: |
+        npm run lint
+        npm run format
+
+    - name: Verify linting and formatting
+      run: |
+        npx lint-staged
