@@ -48,7 +48,7 @@ function SlackMessageAction({ setAction, existingAction }) {
             <Grid container spacing={2} sx={{ marginBottom: "16px" }}>
                 <Grid item xs={12}>
                     <Input
-                        placeholder="Slack Channel"
+                        placeholder="Slack Channel name or channel ID"
                         value={channel}
                         onChange={(e) => setChannel(e.target.value)}
                         fullWidth
@@ -60,7 +60,7 @@ function SlackMessageAction({ setAction, existingAction }) {
             <Grid container spacing={2} sx={{ marginBottom: "16px" }}>
                 <Grid item xs={12}>
                     <Textarea
-                        placeholder="Message"
+                        placeholder="Message in Slack Block format"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         minRows={6}

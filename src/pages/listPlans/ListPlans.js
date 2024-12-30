@@ -7,12 +7,14 @@ import CancelModal from "./modals/CancelModal";
 import ViewModal from "./modals/ViewModal";
 import UpdateModal from "./modals/UpdateModal";
 
-const ROWS_PER_PAGE = 20;
+const SERVER_PAGE_SIZE = 20; // Number of items per page from backend
+const CLIENT_PAGE_SIZE = 5;  // Number of items to display per page on frontend
 
 function ListPlans({ client, user }) {
     const [plans, setPlans] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+    const [serverPage, setServerPage] = useState(0);
+    const [clientPage, setClientPage] = useState(0);
+    const [totalPlans, setTotalPlans] = useState(0);
     const [refreshing, setRefreshing] = useState(false);
     const [popups, setPopups] = useState([]);
     const [showCancelDialog, setShowCancelDialog] = useState(false);
@@ -32,22 +34,22 @@ function ListPlans({ client, user }) {
     const fetchPlans = async (page = 0) => {
         try {
             const response = await client.listPlans(user.id, page);
-            console.log(response)
             setPlans(response.plans);
-            setTotalPages(Math.ceil(response.total / ROWS_PER_PAGE));
+            setTotalPlans(response.total);
         } catch (error) {
             console.error("Failed to fetch plans", error);
         }
     };
 
+    // Initial data fetch
     useEffect(() => {
-        fetchPlans(currentPage);
-    }, [client, user.id, currentPage]);
+        fetchPlans(serverPage);
+    }, [client, user.id]); // Only fetch on initial load
 
     const handleRefresh = async () => {
         setRefreshing(true);
         try {
-            await fetchPlans(currentPage);
+            await fetchPlans(serverPage);
         } catch (error) {
             console.error("Failed to refresh plans", error);
         } finally {
@@ -56,8 +58,29 @@ function ListPlans({ client, user }) {
     };
 
     const handlePageChange = (event, value) => {
-        setCurrentPage(value - 1); // Pagination component uses 1-based indexing
+        const newClientPage = value - 1;
+        const requiredServerPage = Math.floor((newClientPage * CLIENT_PAGE_SIZE) / SERVER_PAGE_SIZE);
+
+        setClientPage(newClientPage);
+
+        // If we need data from a different server page, fetch it
+        if (requiredServerPage !== serverPage) {
+            setServerPage(requiredServerPage);
+            fetchPlans(requiredServerPage);
+        }
     };
+
+    // Get the current page of data to display
+    const getCurrentPageData = () => {
+        const serverPageOffset = (clientPage * CLIENT_PAGE_SIZE) % SERVER_PAGE_SIZE;
+        const sortedPlans = [...plans].sort((a, b) =>
+            new Date(b.created_at) - new Date(a.created_at)
+        )
+        return sortedPlans.slice(serverPageOffset, serverPageOffset + CLIENT_PAGE_SIZE);
+    };
+
+    // Calculate total number of client-side pages
+    const totalClientPages = Math.ceil(totalPlans / CLIENT_PAGE_SIZE);
 
     const handleView = async (planId) => {
         try {
@@ -83,7 +106,7 @@ function ListPlans({ client, user }) {
         try {
             await client.cancelPlan(selectedPlanId);
             addPopup("Plan cancelled successfully", "success");
-            await fetchPlans(currentPage); // Refresh the plans after cancellation
+            await fetchPlans(serverPage);
         } catch (error) {
             addPopup("Failed to cancel plan", "warning");
         } finally {
@@ -114,7 +137,7 @@ function ListPlans({ client, user }) {
                 {refreshing ? "Refreshing..." : "Refresh Plans"}
             </Button>
             <Table stickyHeader sx={{ width: "auto" }} size="md" borderAxis="yBetween" hoverRow>
-                <caption>Plans submitted now will be visible within 30 seconds of submition.</caption>
+                <caption>Plans submitted now will be visible within 30 seconds of submission.</caption>
                 <thead>
                     <tr>
                         <th>Plan ID</th>
@@ -127,7 +150,7 @@ function ListPlans({ client, user }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {plans.map((plan) => (
+                    {getCurrentPageData().map((plan) => (
                         <tr key={plan.id}>
                             <td>
                                 <ContentCopyIcon
@@ -158,11 +181,19 @@ function ListPlans({ client, user }) {
                             </td>
                         </tr>
                     ))}
+                    {/* Add empty rows to maintain fixed height */}
+                    {getCurrentPageData().length < CLIENT_PAGE_SIZE &&
+                        Array.from({ length: CLIENT_PAGE_SIZE - getCurrentPageData().length }).map((_, index) => (
+                            <tr key={`empty-${index}`}>
+                                <td colSpan={7}>&nbsp;</td>
+                            </tr>
+                        ))
+                    }
                 </tbody>
             </Table>
             <Pagination
-                count={totalPages}
-                page={currentPage + 1} // Pagination component uses 1-based indexing
+                count={totalClientPages}
+                page={clientPage + 1}
                 onChange={handlePageChange}
                 sx={{ marginTop: 2 }}
             />

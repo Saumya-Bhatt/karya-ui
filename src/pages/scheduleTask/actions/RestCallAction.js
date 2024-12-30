@@ -6,12 +6,25 @@ import PopupStack from "../../../components/PopupStack";
 import { RestApiRequest } from "karya-client/entities/actions.js";
 import { Protocol, Method } from "karya-client/entities/constants.js";
 
+function convertJsonToKeyValueList(inputJson) {
+    return Object.entries(inputJson).map(([key, value]) => ({
+        key: key,
+        value: value
+    }));
+}
+
+function convertActionBody(body) {
+    if (body instanceof RestApiRequest.JsonBody) return JSON.parse(body.json_string).message;
+    return "";
+}
+
+
 function RestCallAction({ setAction, existingAction }) {
     const [baseUrl, setBaseUrl] = useState(existingAction == null ? "" : existingAction.base_url);
-    const [bodyMessage, setBodyMessage] = useState(existingAction == null ? "" : existingAction.body);
+    const [bodyMessage, setBodyMessage] = useState(existingAction == null ? "" : convertActionBody(existingAction.body));
     const [protocol, setProtocol] = useState(existingAction == null ? "" : existingAction.protocol);
     const [method, setMethod] = useState(existingAction == null ? "" : existingAction.method);
-    const [headers, setHeaders] = useState(existingAction == null ? [{ key: "", value: "" }] : existingAction.headers);
+    const [headers, setHeaders] = useState(existingAction == null ? [{ key: "", value: "" }] : convertJsonToKeyValueList(existingAction.headers));
     const [timeout, setApiTimeout] = useState(existingAction == null ? "" : existingAction.timeout);
     const [popups, setPopups] = useState([]);
 
@@ -53,7 +66,9 @@ function RestCallAction({ setAction, existingAction }) {
         try {
             const restAction = new RestApiRequest(
                 baseUrl, // Base URL
-                new RestApiRequest.JsonBody({ message: bodyMessage }), // JSON Body
+                bodyMessage && bodyMessage.trim() !== ""
+                    ? new RestApiRequest.JsonBody({ message: bodyMessage })
+                    : new RestApiRequest.EmptyBody(),
                 Protocol[protocol], // Protocol (HTTP/HTTPS)
                 Method[method], // Method (GET/POST/PUT/DELETE)
                 headersObject, // Headers
