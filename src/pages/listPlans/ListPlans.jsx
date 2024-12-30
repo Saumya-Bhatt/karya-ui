@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Typography, Box, Button, Table, Stack } from "@mui/joy";
 import { Pagination } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -31,20 +31,23 @@ function ListPlans({ client, user }) {
     setPopups((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const fetchPlans = async (page = 0) => {
-    try {
-      const response = await client.listPlans(user.id, page);
-      setPlans(response.plans);
-      setTotalPlans(response.total);
-    } catch (error) {
-      console.error("Failed to fetch plans", error);
-    }
-  };
+  const fetchPlans = useCallback(
+    async (page = 0) => {
+      try {
+        const response = await client.listPlans(user.id, page);
+        setPlans(response.plans);
+        setTotalPlans(response.total);
+      } catch (error) {
+        console.error("Failed to fetch plans", error);
+      }
+    },
+    [client, user.id]
+  );
 
   // Initial data fetch
   useEffect(() => {
     fetchPlans(serverPage);
-  }, [client, user.id]); // Only fetch on initial load
+  }, [client, user.id, serverPage, fetchPlans]); // Only fetch on initial load
 
   const handleRefresh = async () => {
     setRefreshing(true);
