@@ -3,10 +3,6 @@ Browser-based UI to interact with [Karya](https://github.com/Saumya-Bhatt/karya)
 
 **NOTE: WEB-UI CURRENTLY DOES NOT SUPPORT SCHEDULING CHAINED PLANS**
 
-**Demo:** [https://saumya-bhatt.github.io/karya-ui/](https://saumya-bhatt.github.io/karya-ui/)
-
-> Leave the Endpoint Blank to view the interface with stubbed responses.
-
 ## Screenshots
 
 ### Scheduling Plans
@@ -26,7 +22,7 @@ Browser-based UI to interact with [Karya](https://github.com/Saumya-Bhatt/karya)
 1. Run the docker container using the following command:
 
     ```shell
-    docker run -d --name karya-ui -p 5001:5000 karya-ui
+    docker run -d --name karya-ui -p 5001:5000 saumyabhatt10642/karya-ui
     ```
 
 2. Open the browser and navigate to `http://localhost:5001`

@@ -1,8 +1,7 @@
 {
   "name": "karya-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
-  "homepage": "https://saumya-bhatt.github.io/karya-ui",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -25,8 +24,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{js,jsx}",
     "lint:fix": "eslint --fix src/**/*.{js,jsx}",
-    "format": "prettier --write src/**/*.{js,jsx,css}",
-    "deploy": "gh-pages -d build"
+    "format": "prettier --write src/**/*.{js,jsx,css}"
   },
   "eslintConfig": {
     "extends": [
@@ -52,7 +50,6 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.3",
-    "gh-pages": "^6.2.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
     "prettier": "^3.4.2"

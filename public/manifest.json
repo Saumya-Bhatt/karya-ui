@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Karya Web App",
+  "name": "Browser based app to schedule tasks on Karya",
   "icons": [
     {
       "src": "favicon.ico",
